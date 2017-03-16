@@ -11,3 +11,4 @@ p <- plot_ly(varos_plot_data, x =~Kisterseg, y = ~osszeg, type = 'bar')
 p <- layout(p, xaxis = list(categoryarray = ~osszeg, categoryorder = "array"))
 p
 
+str(adat)
