@@ -12,3 +12,5 @@ p <- layout(p, xaxis = list(categoryarray = ~osszeg, categoryorder = "array"))
 p
 
 str(adat)
+
+summary(adat)
