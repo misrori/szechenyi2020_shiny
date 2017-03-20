@@ -2,7 +2,12 @@ library(shiny)
 library(markdown)
 library(plotly)
 
-navbarPage("Széchenyi 2020",
+navbarPage(
+            tags$head(
+              tags$link(rel = "stylesheet", type = "text/css", href = "bootstrap.css")
+            ),
+            
+           "Széchenyi 2020",
            tabPanel("Leírás",
                     verbatimTextOutput("summary")
            ),
