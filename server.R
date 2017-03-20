@@ -8,17 +8,19 @@ function(input, output, session) {
   adat <- fread('szechenyi2020_adatok.csv', stringsAsFactors = F)
   adat <- adat[,c(1:8, 15, 9:14), with=F]
   
+  my_text <- paste("Mo eddig", sum(adat$osszeg)/1000, "Ft-ot fizetett ki \n ez meg uj sor")
+  
+  
   osszes_nyertes <- reactive({
    adatom <- adat
     names(adatom) <- c('Forrás', 'Operatív program', 'Program', 'Város', 'Nyertes', 'Leírás',
                      'Megítélés dátuma', 'Megítélt összeg','Megítélés éve' ,'Város jogállása','Megye', 'Kistérség', 'Lakó népesség',
                      'Roma önkormányzat', 'Hátrányos helyzet besorolás' )
     return(adatom)
-    
   })
   
   output$summary <- renderPrint({
-    summary(adat)
+   my_text
   })
   
   output$table <- renderDataTable({
@@ -43,32 +45,23 @@ function(input, output, session) {
     by2 <- g_by2()
     by3 <- g_by3()
     osszeitendo_adat <- adat
-   
-    
     if(by1=="" & by2==""& by3==''){
       return(osszes_nyertes())
     }
-    
     else if(by1!=''& by2=='' & by3==''){
       return(osszeitendo_adat[, list('Összeg(millio Ft)'= sum(osszeg),'Nyertes pályázatok száma'=.N), by=by1])
     }
-    
     else if(by1!=''& by2!='' & by3==''){
       return(adat[,list('Összeg(millio Ft)'= sum(osszeg),'Nyertes pályázatok száma'=.N), by=c(by1, by2)])
     }
     else if(by1!=''& by2!='' & by3!=''){
       return(adat[,list('Összeg(millio Ft)'= sum(osszeg),'Nyertes pályázatok száma'=.N), by=c(by1, by2, by3)])
     }
-    
   })
-  
   output$eredmeny <- renderDataTable({
     final_data()
   },options = list( width = "100%",  lengthMenu = c(5,10,100, 1000, 10000 ), pageLength = 5))
-  
-  
-  
-  
+
   my_p_plotly<- reactive({
     by_plot <- g_by_plot()
     plot_adat <- adat
@@ -94,23 +87,16 @@ function(input, output, session) {
       title = "Milliárd Ft",
       titlefont = f
     )
-    
-    
-  
     adat_to_plotly <- plot_adat[, list('Összeg(millio Ft)'= sum(osszeg)/1000,'Nyertes pályázatok száma'=.N), by=by_plot]
     setorder(adat_to_plotly, -`Összeg(millio Ft)`)
     p <- plot_ly(adat_to_plotly, x =~get(by_plot), y = ~`Összeg(millio Ft)`, type = 'bar')%>%
       layout(autosize = F, width = 1000, height = 800, margin = m, yaxis = y, xaxis = x )
-     
     return(p)
-    
   })
-  
   
   output$summary_plot <- renderPlotly({
     my_p_plotly()
   })
-  
   
   output$downloadData <- downloadHandler(
     
@@ -119,6 +105,4 @@ function(input, output, session) {
       write.csv(final_data(), file,  row.names = FALSE,  fileEncoding = "UTF-8")
     }
   )
-  
-  
 }

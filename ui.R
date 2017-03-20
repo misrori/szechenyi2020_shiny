@@ -3,13 +3,27 @@ library(markdown)
 library(plotly)
 
 navbarPage(
-            tags$head(
-              tags$link(rel = "stylesheet", type = "text/css", href = "bootstrap.css")
-            ),
-            
-           "Széchenyi 2020",
+      
+           title="Széchenyi 2020",
+
            tabPanel("Leírás",
-                    verbatimTextOutput("summary")
+                    #h1("Széchenyi 2020 nyertes pályázatok", align = "center"),
+                    h2("Magyarország ", round(sum(adat$osszeg)/1000, 2), "milliárd forintot fizetett ki", align="center"),
+                    h2( nrow(adat), "nyertes pályázaton keresztül" ,align="center"),
+                    h2( 'a Széchenyi 2020 programban!',align="center"),
+                    br(),
+                    br(),
+                    tags$div(
+                      h3('Az adatok forrása',align="center"), #tags$a(href="https://www.palyazat.gov.hu/tamogatott_projektkereso", "https://www.palyazat.gov.hu/tamogatott_projektkereso", style="text-align: center;")
+                      HTML(' <center> <a href="https://www.palyazat.gov.hu/tamogatott_projektkereso">https://www.palyazat.gov.hu</a> </center>')
+                      ),
+                    br(),
+                    tags$div(
+                      h3('Az oldalt készítette',align="center"), #tags$a(href="https://www.palyazat.gov.hu/tamogatott_projektkereso", "https://www.palyazat.gov.hu/tamogatott_projektkereso", style="text-align: center;")
+                      HTML(' <center> <a href="orsosmihaly.com">Orsós Mihály</a> </center>')
+                    )
+                    
+                    
            ),
            tabPanel("Nyertes pályázatok",
                     dataTableOutput("table")
@@ -49,7 +63,11 @@ navbarPage(
                       
                     )
                     
-           )#Grafikon_tab
+           ),
+           tags$head(
+             tags$link(rel = "stylesheet", type = "text/css", href = "bootstrap.css")
+           )# http://bootswatch.com/#Grafikon_tab
+           
            
            
            )#nav
