@@ -18,6 +18,9 @@ navbarPage(
                       HTML(' <center> <a href="https://www.palyazat.gov.hu/tamogatott_projektkereso">https://www.palyazat.gov.hu</a> </center>')
                       ),
                     br(),
+                    h3('Az adatók utolsó frissítése dátuma', align="center"),
+                    h3('2017-03-07', align="center"),
+                    br(),
                     tags$div(
                       h3('Az oldalt készítette',align="center"), #tags$a(href="https://www.palyazat.gov.hu/tamogatott_projektkereso", "https://www.palyazat.gov.hu/tamogatott_projektkereso", style="text-align: center;")
                       HTML(' <center> <a href="orsosmihaly.com">Orsós Mihály</a> </center>')
