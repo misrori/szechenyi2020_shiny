@@ -91,13 +91,13 @@ function(input, output, session) {
       categoryorder = "array"
     )
     y <- list(
-      title = "Millió Ft",
+      title = "Milliárd Ft",
       titlefont = f
     )
     
     
   
-    adat_to_plotly <- plot_adat[, list('Összeg(millio Ft)'= sum(osszeg),'Nyertes pályázatok száma'=.N), by=by_plot]
+    adat_to_plotly <- plot_adat[, list('Összeg(millio Ft)'= sum(osszeg)/1000,'Nyertes pályázatok száma'=.N), by=by_plot]
     setorder(adat_to_plotly, -`Összeg(millio Ft)`)
     p <- plot_ly(adat_to_plotly, x =~get(by_plot), y = ~`Összeg(millio Ft)`, type = 'bar')%>%
       layout(autosize = F, width = 1000, height = 800, margin = m, yaxis = y, xaxis = x )
@@ -109,9 +109,16 @@ function(input, output, session) {
   
   output$summary_plot <- renderPlotly({
     my_p_plotly()
-    
-    
   })
+  
+  
+  output$downloadData <- downloadHandler(
+    
+    filename = 'szechenyi2020data.csv' , content = function(file) {
+      
+      write.csv(final_data(), file,  row.names = FALSE,  fileEncoding = "UTF-8")
+    }
+  )
   
   
 }

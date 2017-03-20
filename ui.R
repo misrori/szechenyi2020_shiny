@@ -25,7 +25,8 @@ navbarPage(
                                                                                  "Hátrányos besorolás"= "tipus", 'Roma önkormányzat'='roma_onkormanyzat'), selected = ""), 
                         selectInput("group_by3", label = "További összegzés", choices = c("","Nyertes"="nyertes", "Város"= "varos", "Forrás"= "forras", "Operatív program" = "operativ_program", "Program"= "program","Év" = "ev",
                                                                                  "Jogállás" ="Jogallas", "Megye"= "Megye", "Kistérség"="Kisterseg", 
-                                                                                 "Hátrányos besorolás"= "tipus", 'Roma önkormányzat'='roma_onkormanyzat'), selected = "")
+                                                                                 "Hátrányos besorolás"= "tipus", 'Roma önkormányzat'='roma_onkormanyzat'), selected = ""),
+                        downloadButton("downloadData","Letöltés")
                       ),
                       mainPanel(
                         dataTableOutput("eredmeny")
@@ -52,8 +53,3 @@ navbarPage(
            
            
            )#nav
-         
-           
-
-
-
