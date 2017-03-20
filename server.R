@@ -13,7 +13,7 @@ function(input, output, session) {
   osszes_nyertes <- reactive({
    adatom <- adat
     names(adatom) <- c('Forrás', 'Operatív program', 'Program', 'Város', 'Nyertes', 'Leírás',
-                     'Megítélés dátuma', 'Megítélt összeg','Megítélés éve' ,'Város jogállása','Megye', 'Kistérség', 'Lakó népesség',
+                     'Megítélés dátuma', 'Megítélt összeg','Megítélés éve' ,'Település jogállása','Megye', 'Kistérség', 'Népesség',
                      'Roma önkormányzat', 'Hátrányos helyzet besorolás' )
     return(adatom)
   })
@@ -48,13 +48,13 @@ function(input, output, session) {
       return(osszes_nyertes())
     }
     else if(by1!=''& by2=='' & by3==''){
-      return(osszeitendo_adat[, list('Összeg(millio Ft)'= sum(osszeg),'Nyertes pályázatok száma'=.N), by=by1])
+      return(osszeitendo_adat[, list('Összeg (millió Ft)'= round(sum(osszeg),2),'Nyertes pályázatok száma'=.N), by=by1])
     }
     else if(by1!=''& by2!='' & by3==''){
-      return(adat[,list('Összeg(millio Ft)'= sum(osszeg),'Nyertes pályázatok száma'=.N), by=c(by1, by2)])
+      return(adat[,list('Összeg (millió Ft)'= round(sum(osszeg),2),'Nyertes pályázatok száma'=.N), by=c(by1, by2)])
     }
     else if(by1!=''& by2!='' & by3!=''){
-      return(adat[,list('Összeg(millio Ft)'= sum(osszeg),'Nyertes pályázatok száma'=.N), by=c(by1, by2, by3)])
+      return(adat[,list('Összeg (millió Ft)'= round(sum(osszeg),2),'Nyertes pályázatok száma'=.N), by=c(by1, by2, by3)])
     }
   })
   output$eredmeny <- renderDataTable({
@@ -79,16 +79,16 @@ function(input, output, session) {
     x <- list(
       title =by_plot,
       titlefont = f,
-      categoryarray = ~`Összeg(millio Ft)`, 
+      categoryarray = ~`Összeg (millió Ft)`, 
       categoryorder = "array"
     )
     y <- list(
       title = "Milliárd Ft",
       titlefont = f
     )
-    adat_to_plotly <- plot_adat[, list('Összeg(millio Ft)'= sum(osszeg)/1000,'Nyertes pályázatok száma'=.N), by=by_plot]
-    setorder(adat_to_plotly, -`Összeg(millio Ft)`)
-    p <- plot_ly(adat_to_plotly, x =~get(by_plot), y = ~`Összeg(millio Ft)`, type = 'bar')%>%
+    adat_to_plotly <- plot_adat[, list('Összeg (millió Ft)'= sum(osszeg)/1000,'Nyertes pályázatok száma'=.N), by=by_plot]
+    setorder(adat_to_plotly, -`Összeg (millió Ft)`)
+    p <- plot_ly(adat_to_plotly, x =~get(by_plot), y = ~`Összeg (millió Ft)`, type = 'bar')%>%
       layout(autosize = F, width = 1000, height = 800, margin = m, yaxis = y, xaxis = x )
     return(p)
   })

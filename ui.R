@@ -10,8 +10,8 @@ navbarPage(
            tabPanel("Leírás",
                     #h1("Széchenyi 2020 nyertes pályázatok", align = "center"),
                     h2("Magyarország ", round(sum(adat$osszeg)/1000, 2), "milliárd forintot fizetett ki", align="center"),
-                    h2( nrow(adat), "nyertes pályázaton keresztül" ,align="center"),
-                    h2( 'a Széchenyi 2020 programban!',align="center"),
+                    h2( nrow(adat), "nyertes pályázatra" ,align="center"),
+                    h2( 'a Széchenyi 2020 program keretében!',align="center"),
                     br(),
                     br(),
                     tags$div(
@@ -43,7 +43,7 @@ navbarPage(
                                                                                  "Hátrányos besorolás"= "tipus", 'Roma önkormányzat'='roma_onkormanyzat'), selected = ""), 
                         selectInput("group_by3", label = "További összegzés", choices = c("","Nyertes"="nyertes", "Város"= "varos", "Forrás"= "forras", "Operatív program" = "operativ_program", "Program"= "program","Év" = "ev",
                                                                                  "Jogállás" ="Jogallas", "Megye"= "Megye", "Kistérség"="Kisterseg", 
-                                                                                 "Hátrányos besorolás"= "tipus", 'Roma önkormányzat'='roma_onkormanyzat'), selected = ""),
+                                                                                  'Roma önkormányzat'='roma_onkormanyzat',"Hátrányos besorolás"= "tipus"), selected = ""),
                         downloadButton("downloadData","Letöltés")
                       ),
                       mainPanel(
