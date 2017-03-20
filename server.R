@@ -8,8 +8,7 @@ function(input, output, session) {
   adat <- fread('szechenyi2020_adatok.csv', stringsAsFactors = F)
   adat <- adat[,c(1:8, 15, 9:14), with=F]
   
-  my_text <- paste("Mo eddig", sum(adat$osszeg)/1000, "Ft-ot fizetett ki \n ez meg uj sor")
-  
+
   
   osszes_nyertes <- reactive({
    adatom <- adat
