@@ -27,7 +27,6 @@ navbarPage(
                       HTML(' <center> <a href="orsosmihaly.com">Orsós Mihály</a> </center>')
                     )
                     
-                    
            ),
            tabPanel("Nyertes pályázatok",
                     dataTableOutput("table")
