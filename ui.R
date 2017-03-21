@@ -1,5 +1,4 @@
 library(shiny)
-library(markdown)
 library(plotly)
 library(data.table)
 adat <- fread('szechenyi2020_adatok.csv', stringsAsFactors = F)
