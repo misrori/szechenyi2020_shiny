@@ -1,11 +1,10 @@
 library(shiny)
 library(plotly)
+library(DT)
 library(data.table)
 adat <- fread('szechenyi2020_adatok.csv', stringsAsFactors = F)
 navbarPage(
-      
            title="Széchenyi 2020",
-
            tabPanel("Leírás",
                     #h1("Széchenyi 2020 nyertes pályázatok", align = "center"),
                     h2("Magyarország ", round(sum(adat$osszeg)/1000, 2), "milliárd forintot fizetett ki", align="center"),
@@ -42,7 +41,7 @@ navbarPage(
                         selectInput("group_by3", label = "További összegzés", choices = c("","Nyertes"="nyertes", "Város"= "varos", "Forrás"= "forras", "Operatív program" = "operativ_program", "Program"= "program","Év" = "ev",
                                                                                  "Jogállás" ="Jogallas", "Megye"= "Megye", "Kistérség"="Kisterseg", 
                                                                                   'Roma önkormányzat'='roma_onkormanyzat',"Hátrányos besorolás"= "tipus"), selected = ""),
-                        downloadButton("downloadData","Letöltés")
+                        downloadButton("downloadData","Összes adat letöltés")
                       ),
                       mainPanel(
                         dataTableOutput("eredmeny")

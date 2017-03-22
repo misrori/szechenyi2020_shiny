@@ -1,19 +1,28 @@
 library(shiny)
-library(data.table)
+library(DT)
 library(plotly)
-
+library(data.table)
 
 
 function(input, output, session) {
   adat <- fread('szechenyi2020_adatok.csv', stringsAsFactors = F)
   adat <- adat[,c(1:8, 15, 9:14), with=F]
-  
-
+  adat$datum <- as.Date(adat$datum)
+  adat$forras<- as.factor(adat$forras)
+  adat$operativ_program <- as.factor(adat$operativ_program)
+  adat$varos <- as.factor(adat$varos)
+  adat$nyertes <- as.factor(adat$nyertes)
+  adat$Jogallas <- as.factor(adat$Jogallas)
+  adat$Megye <- as.factor(adat$Megye)
+  adat$Kisterseg <- as.factor(adat$Kisterseg)
+  adat$tipus <- as.factor(adat$tipus)
+  adat$roma_onkormanyzat <- as.factor(adat$roma_onkormanyzat)
+  adat$Lako_nepesseg <- as.numeric(adat$Lako_nepesseg)
   
   osszes_nyertes <- reactive({
    adatom <- adat
     names(adatom) <- c('Forrás', 'Operatív program', 'Program', 'Város', 'Nyertes', 'Leírás',
-                     'Megítélés dátuma', 'Megítélt összeg','Megítélés éve' ,'Település jogállása','Megye', 'Kistérség', 'Népesség',
+                     'Megítélés dátuma', 'Megítélt összeg (millió Ft)','Megítélés éve' ,'Település jogállása','Megye', 'Kistérség', 'Népesség',
                      'Roma önkormányzat', 'Hátrányos helyzet besorolás' )
     return(adatom)
   })
@@ -22,9 +31,15 @@ function(input, output, session) {
    my_text
   })
   
-  output$table <- renderDataTable({
-    osszes_nyertes()
-  },options = list( width = "100%",  lengthMenu = c(5,10,100, 1000, 10000 ), pageLength = 5))
+  
+  output$table <- DT::renderDataTable(
+    DT::datatable(osszes_nyertes(),extensions = c('Buttons','FixedHeader'),class = 'cell-border stripe',rownames = FALSE,
+                  filter = 'top', options = list(dom = 'Blfrtip', fixedHeader = TRUE,pageLength = 50,lengthMenu = c(10,50,500,5000, 10000, 25000 ),
+                                                 buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
+                                                 columnDefs = list(list(className = 'dt-right',
+                                                                        targets = 0:2)))) %>%
+      formatCurrency(8, '')
+  )
   
   g_by <- reactive({
     as.character(input$group_by)
@@ -57,9 +72,20 @@ function(input, output, session) {
       return(adat[,list('Összeg (millió Ft)'= round(sum(osszeg),2),'Nyertes pályázatok száma'=.N), by=c(by1, by2, by3)])
     }
   })
-  output$eredmeny <- renderDataTable({
-    final_data()
-  },options = list( width = "100%",  lengthMenu = c(5,10,100, 1000, 10000 ), pageLength = 5))
+  
+  output$eredmeny <- DT::renderDataTable(
+    DT::datatable(final_data(),extensions = c('Buttons','FixedHeader'),class = 'cell-border stripe',rownames = FALSE,
+                  filter = 'top', options = list(dom = 'Blfrtip', fixedHeader = TRUE,pageLength = 50,lengthMenu = c(10,50,500,5000, 10000, 25000 ),
+                                                 buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
+                                                 columnDefs = list(list(className = 'dt-right',
+                                                                        targets = 0:2)))) %>%
+      formatCurrency(c(1:8), '')
+  )  
+  
+  # 
+  # output$eredmeny <- renderDataTable({
+  #   final_data()
+  # },options = list( width = "100%",  lengthMenu = c(5,10,100, 1000, 10000 ), pageLength = 5))
 
   my_p_plotly<- reactive({
     by_plot <- g_by_plot()
@@ -101,7 +127,7 @@ function(input, output, session) {
     
     filename = 'szechenyi2020data.csv' , content = function(file) {
       
-      write.csv(final_data(), file,  row.names = FALSE,  fileEncoding = "UTF-8")
+      write.csv(osszes_nyertes(), file,  row.names = FALSE,  fileEncoding = "UTF-8")
     }
   )
 }
