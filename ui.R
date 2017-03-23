@@ -14,7 +14,7 @@ navbarPage(
                     br(),
                     tags$div(
                       h3('Az adatok forrása',align="center"), #tags$a(href="https://www.palyazat.gov.hu/tamogatott_projektkereso", "https://www.palyazat.gov.hu/tamogatott_projektkereso", style="text-align: center;")
-                      HTML(' <center> <a target="_blank",href="https://www.palyazat.gov.hu/tamogatott_projektkereso">https://www.palyazat.gov.hu</a> </center>')
+                      HTML(' <center> <a target="_blank", href="https://www.palyazat.gov.hu/tamogatott_projektkereso">https://www.palyazat.gov.hu</a> </center>')
                       ),
                     br(),
                     h3('Az adatok utolsó frissítési dátuma', align="center"),
