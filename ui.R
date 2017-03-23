@@ -14,7 +14,7 @@ navbarPage(
                     br(),
                     tags$div(
                       h3('Az adatok forrása',align="center"), #tags$a(href="https://www.palyazat.gov.hu/tamogatott_projektkereso", "https://www.palyazat.gov.hu/tamogatott_projektkereso", style="text-align: center;")
-                      HTML(' <center> <a href="https://www.palyazat.gov.hu/tamogatott_projektkereso">https://www.palyazat.gov.hu</a> </center>')
+                      HTML(' <center> <a target="_blank",href="https://www.palyazat.gov.hu/tamogatott_projektkereso">https://www.palyazat.gov.hu</a> </center>')
                       ),
                     br(),
                     h3('Az adatok utolsó frissítési dátuma', align="center"),
@@ -22,7 +22,7 @@ navbarPage(
                     br(),
                     tags$div(
                       h3('Az oldalt készítette',align="center"), #tags$a(href="https://www.palyazat.gov.hu/tamogatott_projektkereso", "https://www.palyazat.gov.hu/tamogatott_projektkereso", style="text-align: center;")
-                      HTML(' <center> <a href="orsosmihaly.com">Orsós Mihály</a> </center>')
+                      HTML(' <center> <a target="_blank", href="http://www.orsosmihaly.com">Orsós Mihály</a> </center>')
                     )
                     
            ),

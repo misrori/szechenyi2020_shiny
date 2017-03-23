@@ -3,7 +3,6 @@ library(DT)
 library(plotly)
 library(data.table)
 
-
 function(input, output, session) {
   adat <- fread('szechenyi2020_adatok.csv', stringsAsFactors = F)
   adat <- adat[,c(1:8, 15, 9:14), with=F]
@@ -36,8 +35,7 @@ function(input, output, session) {
     DT::datatable(osszes_nyertes(),extensions = c('Buttons','FixedHeader'),class = 'cell-border stripe',rownames = FALSE,
                   filter = 'top', options = list(dom = 'Blfrtip', fixedHeader = TRUE,pageLength = 50,lengthMenu = c(10,50,500,5000, 10000, 25000 ),
                                                  buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
-                                                 columnDefs = list(list(className = 'dt-right',
-                                                                        targets = 0:2)))) %>%
+                                                 columnDefs = list())) %>%
       formatCurrency(8, '')
   )
   
@@ -79,14 +77,10 @@ function(input, output, session) {
                                                  buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
                                                  columnDefs = list(list(className = 'dt-right',
                                                                         targets = 0:2)))) %>%
-      formatCurrency(c(1:8), '')
+      formatCurrency(c(2:8), '')
   )  
   
-  # 
-  # output$eredmeny <- renderDataTable({
-  #   final_data()
-  # },options = list( width = "100%",  lengthMenu = c(5,10,100, 1000, 10000 ), pageLength = 5))
-
+ 
   my_p_plotly<- reactive({
     by_plot <- g_by_plot()
     plot_adat <- adat
