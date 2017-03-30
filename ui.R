@@ -69,6 +69,4 @@ navbarPage(
              tags$link(rel = "stylesheet", type = "text/css", href = "bootstrap.css")
            )# http://bootswatch.com/#Grafikon_tab
            
-           
-           
            )#nav
