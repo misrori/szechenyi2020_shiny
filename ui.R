@@ -61,7 +61,6 @@ navbarPage(
                         plotlyOutput('summary_plot')
                       )
                       
-                      
                     )
                     
            ),
