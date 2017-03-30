@@ -55,7 +55,6 @@ navbarPage(
                                                                                  "Jogállás" ="Jogallas", "Megye"= "Megye", "Kistérség"="Kisterseg", 
                                                                                  "Hátrányos besorolás"= "tipus", 'Roma önkormányzat'='roma_onkormanyzat'), selected = "operativ_program")
                         
-                        
                       ),
                       mainPanel(
                         plotlyOutput('summary_plot')
