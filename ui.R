@@ -18,13 +18,12 @@ navbarPage(
                       ),
                     br(),
                     h3('Az adatok utolsó frissítési dátuma', align="center"),
-                    h4('2017-03-07', align="center"),
+                    h4('2017-04-25', align="center"),
                     br(),
                     tags$div(
                       h3('Az oldalt készítette',align="center"), #tags$a(href="https://www.palyazat.gov.hu/tamogatott_projektkereso", "https://www.palyazat.gov.hu/tamogatott_projektkereso", style="text-align: center;")
                       HTML(' <center> <a target="_blank", href="http://www.orsosmihaly.com">Orsós Mihály</a> </center>')
                     )
-                    
            ),
            tabPanel("Nyertes pályázatok",
                     dataTableOutput("table")
