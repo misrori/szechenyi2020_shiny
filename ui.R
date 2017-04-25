@@ -9,7 +9,7 @@ navbarPage(
                     #h1("Széchenyi 2020 nyertes pályázatok", align = "center"),
                     h2("Magyarország ", round(sum(adat$osszeg)/1000, 2), "milliárd forintot fizetett ki", align="center"),
                     h2( nrow(adat), "nyertes pályázatra" ,align="center"),
-                    h2( 'a Széchenyi 2020 program keretében!',align="center"),
+                    h2( 'a Széchenyi 2020 program keretében EU-s forrásból!',align="center"),
                     br(),
                     br(),
                     tags$div(
