@@ -36,7 +36,7 @@ function(input, output, session) {
                   filter = 'top', options = list(dom = 'Blfrtip', fixedHeader = TRUE,pageLength = 50,lengthMenu = c(10,50,500,5000, 10000, 25000 ),
                                                  buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
                                                  columnDefs = list())) %>%
-      formatCurrency(8, '')
+      formatCurrency(which(colnames(final_data())=="Megítélt összeg (millió Ft)"), '')
   )
   
   g_by <- reactive({
@@ -77,7 +77,7 @@ function(input, output, session) {
                                                  buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
                                                  columnDefs = list(list(className = 'dt-right',
                                                                         targets = 0:2)))) %>%
-      formatCurrency(c(2:8), '')
+      formatCurrency(which(colnames(final_data())=="Megítélt összeg (millió Ft)"), '')
   )  
   
  
