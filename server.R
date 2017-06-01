@@ -77,7 +77,7 @@ function(input, output, session) {
                                                  buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
                                                  columnDefs = list(list(className = 'dt-right',
                                                                         targets = 0:2)))) %>%
-      formatCurrency(which(colnames(final_data())=="Megítélt összeg (millió Ft)"), '')
+      formatCurrency(which(colnames(final_data())=="Összeg (millió Ft)"), '')
   )  
   
  
