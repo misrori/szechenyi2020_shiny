@@ -17,6 +17,7 @@ function(input, output, session) {
   adat$tipus <- as.factor(adat$tipus)
   adat$roma_onkormanyzat <- as.factor(adat$roma_onkormanyzat)
   adat$Lako_nepesseg <- as.numeric(adat$Lako_nepesseg)
+  setorder(adat,datum)
   
   osszes_nyertes <- reactive({
    adatom <- adat
