@@ -4,6 +4,24 @@ library(plotly)
 library(data.table)
 
 function(input, output, session) {
+  
+  values <- reactiveValues(keresendovaros = "")
+  
+  observe({ query <- parseQueryString(session$clientData$url_search) 
+  if (!is.null(query[['varos']])) 
+  { updateTextInput(session, "varosom", value = query[['varos']]) } 
+  
+  })
+  
+  observe({ query <- parseQueryString(session$clientData$url_search) 
+  if (!is.null(query[['page']])) 
+  { updateNavbarPage(session, 'my_nav_page', selected = 'Elemzés')} 
+  
+  })
+  
+ 
+  
+  
   adat <- fread('szechenyi2020_adatok.csv', stringsAsFactors = F)
   adat <- adat[,c(1:8, 15, 9:14), with=F]
   adat$datum <- as.Date(adat$datum)
@@ -17,7 +35,10 @@ function(input, output, session) {
   adat$tipus <- as.factor(adat$tipus)
   adat$roma_onkormanyzat <- as.factor(adat$roma_onkormanyzat)
   adat$Lako_nepesseg <- as.numeric(adat$Lako_nepesseg)
-  setorder(adat,datum)
+  setorder(adat,-osszeg)
+  
+  
+
   
   osszes_nyertes <- reactive({
    adatom <- adat
@@ -27,10 +48,7 @@ function(input, output, session) {
     return(adatom)
   })
   
-  output$summary <- renderPrint({
-   my_text
-  })
-  
+
   
   output$table <- DT::renderDataTable(
     DT::datatable(osszes_nyertes(),extensions = c('Buttons','FixedHeader'),class = 'cell-border stripe',rownames = FALSE,
@@ -52,24 +70,35 @@ function(input, output, session) {
   g_by_plot <- reactive({
     as.character(input$plot_osszegzo)
   })
+  varos_szuro <- reactive({
+    as.character(input$varosom)
+  })
   
   final_data <- reactive({
+    osszeitendo_adat <- adat
+   
+    
     by1 <- g_by()
     by2 <- g_by2()
     by3 <- g_by3()
-    osszeitendo_adat <- adat
-    if(by1=="" & by2==""& by3==''){
+    varosomm<-varos_szuro()
+    
+    if(by1=="" & by2==""& by3==''& varosomm==''){
       return(osszes_nyertes())
     }
-    else if(by1!=''& by2=='' & by3==''){
+    else if(by1!=''& by2=='' & by3==''& varosomm==''){
       return(osszeitendo_adat[, list('Összeg (millió Ft)'= round(sum(osszeg),2),'Nyertes pályázatok száma'=.N), by=by1])
     }
-    else if(by1!=''& by2!='' & by3==''){
+    else if(by1!=''& by2!='' & by3==''& varosomm==''){
       return(adat[,list('Összeg (millió Ft)'= round(sum(osszeg),2),'Nyertes pályázatok száma'=.N), by=c(by1, by2)])
     }
-    else if(by1!=''& by2!='' & by3!=''){
+    else if(by1!=''& by2!='' & by3!=''& varosomm==''){
       return(adat[,list('Összeg (millió Ft)'= round(sum(osszeg),2),'Nyertes pályázatok száma'=.N), by=c(by1, by2, by3)])
     }
+    else if( varosomm!=''){
+      return(adat[varos==varosomm,])
+    }
+    
   })
   
   output$eredmeny <- DT::renderDataTable(
@@ -82,6 +111,11 @@ function(input, output, session) {
   )  
   
  
+  
+  output$my_query <- renderText({values$keresendovaros})
+  
+  
+  
   my_p_plotly<- reactive({
     by_plot <- g_by_plot()
     plot_adat <- adat
