@@ -86,17 +86,33 @@ function(input, output, session) {
     if(by1=="" & by2==""& by3==''& varosomm==''){
       return(osszes_nyertes())
     }
-    else if(by1!=''& by2=='' & by3==''& varosomm==''){
+    
+    ###
+    else if(by1!=''& by2=='' & by3==''){
+      updateTextInput(session, "varosom", value ="")
       return(osszeitendo_adat[, list('Összeg (millió Ft)'= round(sum(osszeg),2),'Nyertes pályázatok száma'=.N), by=by1])
     }
-    else if(by1!=''& by2!='' & by3==''& varosomm==''){
+    else if(by1!=''& by2!='' & by3==''){
+      updateTextInput(session, "varosom", value ="")
       return(adat[,list('Összeg (millió Ft)'= round(sum(osszeg),2),'Nyertes pályázatok száma'=.N), by=c(by1, by2)])
     }
-    else if(by1!=''& by2!='' & by3!=''& varosomm==''){
+    else if(by1!=''& by2!='' & by3!=''){
+      updateTextInput(session, "varosom", value ="")
       return(adat[,list('Összeg (millió Ft)'= round(sum(osszeg),2),'Nyertes pályázatok száma'=.N), by=c(by1, by2, by3)])
     }
-    else if( varosomm!=''){
+    else if( by1==''& by2=='' & by3=='' & varosomm!=''){
+      updateTextInput(session, "group_by", value = "")
+      updateTextInput(session, "group_by2", value = "")
+      updateTextInput(session, "group_by3", value = "")
       return(adat[varos==varosomm,])
+     
+    }
+    else if( by1!='' & varosomm!=''){
+      updateTextInput(session, "group_by", value = "")
+      updateTextInput(session, "group_by2", value = "")
+      updateTextInput(session, "group_by3", value = "")
+      return(adat[varos==varosomm,])
+      
     }
     
   })
@@ -112,7 +128,7 @@ function(input, output, session) {
   
  
   
-  output$my_query <- renderText({values$keresendovaros})
+  #output$my_query <- renderText({values$keresendovaros})
   
   
   
