@@ -104,14 +104,22 @@ function(input, output, session) {
       updateTextInput(session, "group_by", value = "")
       updateTextInput(session, "group_by2", value = "")
       updateTextInput(session, "group_by3", value = "")
-      return(adat[varos==varosomm,])
+      my_adat <-adat[varos==varosomm,]
+      names(my_adat) <- c('Forrás', 'Operatív program', 'Program', 'Város', 'Nyertes', 'Leírás',
+                         'Megítélés dátuma', 'Megítélt összeg (millió Ft)','Megítélés éve' ,'Település jogállása','Megye', 'Kistérség', 'Népesség',
+                         'Roma önkormányzat', 'Hátrányos helyzet besorolás' )
+      return(my_adat)
      
     }
     else if( by1!='' & varosomm!=''){
       updateTextInput(session, "group_by", value = "")
       updateTextInput(session, "group_by2", value = "")
       updateTextInput(session, "group_by3", value = "")
-      return(adat[varos==varosomm,])
+      my_adat <-adat[varos==varosomm,]
+      names(my_adat) <- c('Forrás', 'Operatív program', 'Program', 'Város', 'Nyertes', 'Leírás',
+                          'Megítélés dátuma', 'Megítélt összeg (millió Ft)','Megítélés éve' ,'Település jogállása','Megye', 'Kistérség', 'Népesség',
+                          'Roma önkormányzat', 'Hátrányos helyzet besorolás' )
+      return(my_adat)
       
     }
     
